@@ -110,8 +110,6 @@ fn app() -> Html {
                     <FinishScreen is_win={game.won} {onclose} onrestart={onclick} />
                 }
             </Container>
-
-            <h1>{&*game.word}</h1>
             {include_cdn_js()}
         </>
     }
