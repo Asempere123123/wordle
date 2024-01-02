@@ -68,23 +68,25 @@ pub fn keyboard(props: &KeyboardProps) -> Html {
 
     let onclick_clone = onclick.clone();
     use_event_with_window("keydown", move |e: KeyboardEvent| {
-        let c_code = e.key_code() as u8;
-        let mut ch: char;
-        if c_code == 13 {
-            ch = '⏎';
-        } else if c_code == 8 {
-            ch = '⇦';
-        } else {
-            ch = c_code.into();
-        }
-        ch = ch.to_ascii_lowercase();
+        unsafe {
+            let mut ch = char::from_u32_unchecked(e.key_code());
 
-        let all_keys = vec![
-            'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '⇦', 'a', 's', 'd', 'f', 'g', 'h',
-            'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '⏎',
-        ];
-        if all_keys.contains(&ch) {
-            onclick_clone.emit(ch);
+            if ch == 13.into() {
+                ch = '⏎';
+            } else if ch == 8.into() {
+                ch = '⇦';
+            } else {
+                ch = ch.into();
+            }
+            ch = ch.to_ascii_lowercase();
+
+            let all_keys = vec![
+                'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '⇦', 'a', 's', 'd', 'f', 'g', 'h',
+                'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '⏎',
+            ];
+            if all_keys.contains(&ch) {
+                onclick_clone.emit(ch);
+            }
         }
     });
 
