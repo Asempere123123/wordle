@@ -67,26 +67,24 @@ pub fn keyboard(props: &KeyboardProps) -> Html {
     });
 
     let onclick_clone = onclick.clone();
-    use_event_with_window("keydown", move |e: KeyboardEvent| {
-        unsafe {
-            let mut ch = char::from_u32_unchecked(e.key_code());
+    use_event_with_window("keydown", move |e: KeyboardEvent| unsafe {
+        let mut ch = char::from_u32_unchecked(e.key_code());
 
-            if ch == 13.into() {
-                ch = '⏎';
-            } else if ch == 8.into() {
-                ch = '⇦';
-            } else {
-                ch = ch.into();
-            }
-            ch = ch.to_ascii_lowercase();
+        if ch == 13.into() {
+            ch = '⏎';
+        } else if ch == 8.into() {
+            ch = '⇦';
+        } else {
+            ch = ch.into();
+        }
+        ch = ch.to_ascii_lowercase();
 
-            let all_keys = vec![
-                'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '⇦', 'a', 's', 'd', 'f', 'g', 'h',
-                'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '⏎',
-            ];
-            if all_keys.contains(&ch) {
-                onclick_clone.emit(ch);
-            }
+        let all_keys = vec![
+            'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '⇦', 'a', 's', 'd', 'f', 'g', 'h',
+            'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '⏎',
+        ];
+        if all_keys.contains(&ch) {
+            onclick_clone.emit(ch);
         }
     });
 
