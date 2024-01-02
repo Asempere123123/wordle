@@ -9,3 +9,6 @@ edition = "2021"
 gloo = "0.11.0"
 rand = "0.8.5"
 yew = { version = "0.21.0", features = ["csr"] }
+yew-hooks = "0.3.0"
+yew-bootstrap = "0.9"
+stylist = { version = "0.13.0", features = ["yew"] }

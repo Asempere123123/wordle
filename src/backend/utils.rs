@@ -22,7 +22,7 @@ impl Game {
     pub fn new() -> Self {
         Self {
             word: Self::get_random_word(),
-            guesses: vec![Guess::new()],
+            guesses: vec![Guess::new(); 6],
             won: false,
             current_word: 0,
         }
@@ -55,9 +55,7 @@ impl Game {
             red,
         };
 
-        self.guesses.pop();
-        self.guesses.push(guess);
-        self.guesses.push(Guess::new());
+        self.guesses[self.current_word] = guess;
 
         self.current_word += 1;
     }

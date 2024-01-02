@@ -1,4 +1,6 @@
 use yew::prelude::*;
+use yew_bootstrap::component::Container;
+use yew_bootstrap::util::{include_cdn, include_cdn_js};
 
 mod backend;
 mod components;
@@ -41,12 +43,15 @@ fn app() -> Html {
 
     html! {
         <>
+            {include_cdn()}
             <h1>{ &*game.word }</h1>
             <h1>{ game.won }</h1>
-
-            <Words guesses={game.guesses.clone()} />
-            <Keyboard {onword} {onletter} {onremoveletter} guesses={game.guesses.clone()} />
-            <RestartButton {onclick} />
+            <Container>
+                <Words guesses={game.guesses.clone()} />
+                <Keyboard {onword} {onletter} {onremoveletter} guesses={game.guesses.clone()} />
+                <RestartButton {onclick} />
+            </Container>
+            {include_cdn_js()}
         </>
     }
 }

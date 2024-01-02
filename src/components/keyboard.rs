@@ -1,4 +1,6 @@
+use stylist::yew::styled_component;
 use yew::prelude::*;
+use yew_hooks::prelude::*;
 
 use crate::backend::utils::Guess;
 
@@ -11,7 +13,7 @@ pub struct KeyboardProps {
     pub guesses: Vec<Guess>,
 }
 
-#[function_component(Keyboard)]
+#[styled_component(Keyboard)]
 pub fn keyboard(props: &KeyboardProps) -> Html {
     let mut green = Vec::new();
     let mut yellow = Vec::new();
@@ -28,9 +30,9 @@ pub fn keyboard(props: &KeyboardProps) -> Html {
         })
     });
 
-    let first_line = vec!['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '⇦'];
+    let first_line = vec!['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'];
     let second_line = vec!['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'];
-    let third_line = vec!['z', 'x', 'c', 'v', 'b', 'n', 'm', '⏎'];
+    let third_line = vec!['⏎', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '⇦'];
 
     let word = use_state(|| "".to_owned());
     let onword = props.onword.clone();
@@ -64,12 +66,80 @@ pub fn keyboard(props: &KeyboardProps) -> Html {
         word.set(word_content);
     });
 
+    let onclick_clone = onclick.clone();
+    use_event_with_window("keydown", move |e: KeyboardEvent| {
+        let c_code = e.key_code() as u8;
+        let mut ch: char;
+        if c_code == 13 {
+            ch = '⏎';
+        } else if c_code == 8 {
+            ch = '⇦';
+        } else {
+            ch = c_code.into();
+        }
+        ch = ch.to_ascii_lowercase();
+
+        let all_keys = vec![
+            'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '⇦', 'a', 's', 'd', 'f', 'g', 'h',
+            'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '⏎',
+        ];
+        if all_keys.contains(&ch) {
+            onclick_clone.emit(ch);
+        }
+    });
+
+    let css_str = include_str!("keyboard.css");
+    gloo::console::log!(css_str);
+
     html! {
-    <>
+    <div class={css!(r#"
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px;
+            box-sizing: border-box;
+
+            .row {
+                width: 100%;
+                margin-bottom: 10px;
+                display: flex;
+                justify-content: center;
+                max-width: 750px;
+                gap: 5px;
+            }
+
+            .tag-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 60px;
+                width: 60px;
+                border: 1px solid black;
+                border-radius: 7px;
+            }
+
+            .tag {
+                font-size: 32px;
+            }
+
+            .green {
+                background-color: green;
+            }
+
+            .yellow {
+                background-color: yellow;
+            }
+
+            .red {
+                background-color: grey;
+            }
+        "#)}>
         <KeyLine line={first_line} onclick={onclick.clone()} green={green.clone()} yellow={yellow.clone()} red={red.clone()} />
         <KeyLine line={second_line} onclick={onclick.clone()} green={green.clone()} yellow={yellow.clone()} red={red.clone()} />
         <KeyLine line={third_line} {onclick} green={green} yellow={yellow} red={red} />
-    </>
+    </div>
     }
 }
 
@@ -85,23 +155,34 @@ struct KeyLineProps {
 #[function_component(KeyLine)]
 fn key_line(props: &KeyLineProps) -> Html {
     html! {
-        {for props.line.iter().map(|c| {
-            let onclick_clone = props.onclick.clone();
-            let c_clone = c.clone();
-            let onclick = Callback::from(move |_| {
-                onclick_clone.emit(c_clone);
-            });
+        <div class="row">
+            {props.line.iter().map(|c| {
+                let onclick_clone = props.onclick.clone();
+                let c_clone = c.clone();
+                let onclick = Callback::from(move |_| {
+                    onclick_clone.emit(c_clone);
+                });
 
-            html! {
-                if props.green.contains(c) {
-                <button {onclick} style="background-color: green;">{c}</button>}
-                else if props.yellow.contains(c) {
-                <button {onclick} style="background-color: yellow;">{c}</button>}
-                else if props.red.contains(c) {
-                    <button {onclick} style="background-color: red;">{c}</button>
-                } else {
-                <button {onclick}>{c}</button>}
-            }
-        })}
+                html! {
+                    if props.green.contains(c) {
+                    <button {onclick} class="tag-container green">
+                        <span class="tag">{c}</span>
+                    </button>
+                    } else if props.yellow.contains(c) {
+                        <button {onclick} class="tag-container yellow">
+                            <span class="tag">{c}</span>
+                        </button>
+                    } else if props.red.contains(c) {
+                    <button {onclick} class="tag-container red">
+                        <span class="tag">{c}</span>
+                    </button>
+                    } else {
+                    <button {onclick} class="tag-container">
+                        <span class="tag">{c}</span>
+                    </button>
+                    }
+                }
+            }).collect::<Html>()}
+        </div>
     }
 }
