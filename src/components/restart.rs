@@ -11,6 +11,6 @@ pub fn restart(props: &RestartButtonProps) -> Html {
     let restart_game = Callback::from(move |_| onclick.emit(()));
 
     html! {
-        <button onclick={restart_game}>{"Restart"} </button>
+        <button onclick={restart_game} class="btn btn-primary">{"Restart"}</button>
     }
 }

@@ -88,9 +88,6 @@ pub fn keyboard(props: &KeyboardProps) -> Html {
         }
     });
 
-    let css_str = include_str!("keyboard.css");
-    gloo::console::log!(css_str);
-
     html! {
     <div class={css!(r#"
             width: 100%;
@@ -98,7 +95,6 @@ pub fn keyboard(props: &KeyboardProps) -> Html {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 60px;
             box-sizing: border-box;
 
             .row {
@@ -125,15 +121,15 @@ pub fn keyboard(props: &KeyboardProps) -> Html {
             }
 
             .green {
-                background-color: green;
+                background-color: #43a047;
             }
 
             .yellow {
-                background-color: yellow;
+                background-color: #e4a81d;
             }
 
             .red {
-                background-color: grey;
+                background-color: #757575;
             }
         "#)}>
         <KeyLine line={first_line} onclick={onclick.clone()} green={green.clone()} yellow={yellow.clone()} red={red.clone()} />

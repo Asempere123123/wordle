@@ -19,6 +19,7 @@ pub fn word(props: &WordsProps) -> Html {
             flex-direction: column;
             align-items: center;
             padding: 60px;
+            padding-top: 10px;
             box-sizing: border-box;
 
             .row {
@@ -44,15 +45,15 @@ pub fn word(props: &WordsProps) -> Html {
             }
 
             .green {
-                background-color: green;
+                background-color: #43a047;
             }
 
             .yellow {
-                background-color: yellow;
+                background-color: #e4a81d;
             }
 
             .red {
-                background-color: grey;
+                background-color: #757575;
             }
         "#)}>
             {props
