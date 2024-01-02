@@ -44,8 +44,7 @@ fn app() -> Html {
     html! {
         <>
             {include_cdn()}
-            <h1>{ &*game.word }</h1>
-            <h1>{ game.won }</h1>
+            <h1>{ "Asemperedle" }</h1>
             <Container>
                 <Words guesses={game.guesses.clone()} />
                 <Keyboard {onword} {onletter} {onremoveletter} guesses={game.guesses.clone()} />
