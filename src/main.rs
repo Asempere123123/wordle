@@ -63,6 +63,7 @@ fn app() -> Html {
     html! {
         <>
             {include_cdn()}
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
             <Container>
                 <div class={css!(r#"
                     width: 100%;
@@ -107,10 +108,9 @@ fn app() -> Html {
                 <Keyboard {onword} {onletter} {onremoveletter} guesses={game.guesses.clone()} is_finish={game.won} />
 
                 if game.game_ended {
-                    <FinishScreen is_win={game.won} {onclose} onrestart={onclick} />
+                    <FinishScreen is_win={game.won} word={game.word.clone()} {onclose} onrestart={onclick} attempt={game.current_word} />
                 }
             </Container>
-            <h1>{&*game.word}</h1>
             {include_cdn_js()}
         </>
     }
