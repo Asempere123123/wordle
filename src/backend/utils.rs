@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use rand::Rng;
 
 const WORD_LIST: &str = include_str!("words.txt");
@@ -44,11 +46,29 @@ impl Game {
         let mut green = Vec::new();
         let mut yellow = Vec::new();
         let mut red = Vec::new();
+        let mut coincidences: HashMap<char, usize> = HashMap::new();
         guess.chars().enumerate().for_each(|(i, c)| {
             if c == word_chars[i] {
                 green.push(i);
-            } else if word_chars.contains(&c) {
+                if let Some(coincidence) = coincidences.get_mut(&c) {
+                    *coincidence += 1;
+                } else {
+                    coincidences.insert(c, 1);   
+                }
+            }
+        });
+
+        let mut appearences: HashMap<char, usize> = HashMap::new();
+        guess.chars().enumerate().for_each(|(i, c)| {
+            if let None = appearences.get(&c) {
+                let count = self.word.chars().filter(|d| d == &c).count();
+                appearences.insert(c, count);
+            }
+            let coin = coincidences.get(&c).unwrap_or(&0);
+            let ap = appearences.get(&c).unwrap();
+            if word_chars.contains(&c) && !(c == word_chars[i]) && ap > coin {
                 yellow.push(i);
+                *coincidences.get_mut(&c).unwrap() += 1;
             } else {
                 red.push(i);
             }
