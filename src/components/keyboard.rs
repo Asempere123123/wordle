@@ -129,7 +129,9 @@ pub fn keyboard(props: &KeyboardProps) -> Html {
                 }
 
                 .tag {
-                    font-size: 25px;
+                    font-size: 20px;
+                    font-weight: lighter;
+                    margin-bottom: 5px;
                 }
             }
 

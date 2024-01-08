@@ -49,6 +49,10 @@ pub fn word(props: &WordsProps) -> Html {
 
                 padding: 30px;
                 padding-top: 5px;
+
+                .tag {
+                    font-weight: lighter;
+                }
             }
 
             .tag {
