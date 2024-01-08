@@ -26,7 +26,8 @@ pub fn word(props: &WordsProps) -> Html {
                 width: 100%;
                 margin-bottom: 10px;
                 display: flex;
-                justify-content: space-evenly;
+                justify-content: center;
+                gap: 5px;
                 max-width: 350px;
             }
 
@@ -38,6 +39,16 @@ pub fn word(props: &WordsProps) -> Html {
                 width: 60px;
                 border: 1px solid black;
                 border-radius: 7px;
+            }
+
+            @media screen and (max-height: 700px) {
+                .tag-container {
+                    height: 40px;
+                    width: 40px;
+                }
+
+                padding: 30px;
+                padding-top: 5px;
             }
 
             .tag {

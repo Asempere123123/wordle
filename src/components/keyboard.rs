@@ -11,6 +11,7 @@ pub struct KeyboardProps {
     pub onletter: Callback<char>,
     pub onremoveletter: Callback<()>,
     pub guesses: Vec<Guess>,
+    pub is_finish: bool
 }
 
 #[styled_component(Keyboard)]
@@ -38,7 +39,12 @@ pub fn keyboard(props: &KeyboardProps) -> Html {
     let onword = props.onword.clone();
     let onletter = props.onletter.clone();
     let onremoveletter = props.onremoveletter.clone();
+    let is_finish = props.is_finish.clone();
     let onclick = Callback::from(move |c| {
+        if is_finish {
+            return;
+        }
+
         let mut word_content = (&*word).clone();
 
         if c == '⏎' {
@@ -114,6 +120,17 @@ pub fn keyboard(props: &KeyboardProps) -> Html {
                 width: 60px;
                 border: 1px solid black;
                 border-radius: 7px;
+            }
+
+            @media screen and (max-height: 700px) {
+                .tag-container {
+                    height: 40px;
+                    width: 40px;
+                }
+
+                .tag {
+                    font-size: 25px;
+                }
             }
 
             .tag {

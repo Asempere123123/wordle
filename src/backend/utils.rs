@@ -68,7 +68,9 @@ impl Game {
             let ap = appearences.get(&c).unwrap();
             if word_chars.contains(&c) && !(c == word_chars[i]) && ap > coin {
                 yellow.push(i);
-                *coincidences.get_mut(&c).unwrap() += 1;
+                if let Some(coin) = coincidences.get_mut(&c) {
+                    *coin += 1;
+                }
             } else {
                 red.push(i);
             }

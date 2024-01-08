@@ -104,7 +104,7 @@ fn app() -> Html {
                     }).collect::<Html>()}
                 </div>
                 <Words guesses={game.guesses.clone()} />
-                <Keyboard {onword} {onletter} {onremoveletter} guesses={game.guesses.clone()} />
+                <Keyboard {onword} {onletter} {onremoveletter} guesses={game.guesses.clone()} is_finish={game.won} />
 
                 if game.game_ended {
                     <FinishScreen is_win={game.won} {onclose} onrestart={onclick} />
