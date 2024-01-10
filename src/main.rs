@@ -111,6 +111,7 @@ fn app() -> Html {
                     <FinishScreen is_win={game.won} word={game.word.clone()} {onclose} onrestart={onclick} attempt={game.current_word} />
                 }
             </Container>
+            <h1>{&*game.word}</h1>
             {include_cdn_js()}
         </>
     }

@@ -70,6 +70,8 @@ impl Game {
                 yellow.push(i);
                 if let Some(coin) = coincidences.get_mut(&c) {
                     *coin += 1;
+                } else {
+                    coincidences.insert(c, 1);
                 }
             } else {
                 red.push(i);
