@@ -769,15 +769,15 @@ function __wbg_get_imports() {
         const ret = wasm.memory;
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper459 = function(arg0, arg1, arg2) {
-        const ret = makeMutClosure(arg0, arg1, 255, __wbg_adapter_26);
+    imports.wbg.__wbindgen_closure_wrapper399 = function(arg0, arg1, arg2) {
+        const ret = makeMutClosure(arg0, arg1, 192, __wbg_adapter_26);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper626 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper627 = function(arg0, arg1, arg2) {
         const ret = makeClosure(arg0, arg1, 301, __wbg_adapter_29);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_closure_wrapper979 = function(arg0, arg1, arg2) {
+    imports.wbg.__wbindgen_closure_wrapper980 = function(arg0, arg1, arg2) {
         const ret = makeMutClosure(arg0, arg1, 404, __wbg_adapter_32);
         return addHeapObject(ret);
     };
@@ -820,7 +820,7 @@ async function __wbg_init(input) {
     if (wasm !== undefined) return wasm;
 
     if (typeof input === 'undefined') {
-        input = new URL('wordle-ed1a53a690061c0d_bg.wasm', import.meta.url);
+        input = new URL('wordle-26367abb4b17992b_bg.wasm', import.meta.url);
     }
     const imports = __wbg_get_imports();
 
